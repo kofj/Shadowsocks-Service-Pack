@@ -3,4 +3,6 @@ go:
   - 1.4
 install:
   - go get github.com/astaxie/beego
+  - mv $HOME/gopath/src/github.com/kofj/Shadowsocks-Service-Pack $HOME/gopath/src
+  - cd $HOME/gopath/src/Shadowsocks-Service-Pack
   - go install ./Panel
