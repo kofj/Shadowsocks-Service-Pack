@@ -1,0 +1,56 @@
+body{
+  font-family: '\5FAE\8F6F\96C5\9ED1';
+  background-image: url("../img/bg.jpg");
+}
+
+div#verifycode img {
+  margin-top: 16px;
+  width: 90%;
+  height: 50px;
+}
+
+/**** register page ****/
+#register {
+  width: 80%;
+  margin: 10px auto;
+}
+#register div.ui.left.input {
+  font-size: 1.2em;
+  font-weight: 900;
+}
+#register div.ui.corner.label {
+  opacity: .5;
+}
+
+
+/**** login page ****/
+#login{
+  width: 350px;
+  margin: 10px auto;
+}
+
+@media screen and (max-width: 800px) {
+  .column {
+    min-width: 98%;
+    max-width: 780px;
+  }
+  div.ui.popup.right{
+    display: none;
+  }
+  .ui.vertical.divider {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .column {
+    min-width: 300px;
+    max-width: 310px;
+  }
+  .ui.vertical.divider {
+    display: none;
+  }
+}
+
+
+
