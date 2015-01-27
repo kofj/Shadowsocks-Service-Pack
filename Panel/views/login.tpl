@@ -24,7 +24,7 @@
         <div class="field">
           <label>用户名</label>
           <div class="ui left icon input">
-            <input type="text" id="username" name="username" placeholder="用户名">
+            <input type="text" id="username" name="username" placeholder="用户名" autocomplete="on" />
             <i class="user icon"></i>
             <div class="ui corner label red" data-content="用户名以字母开头,且不区分大小写">
               <i class="asterisk icon"></i>
@@ -35,7 +35,7 @@
         <div class="field">
           <label>密码</label>
           <div class="ui left icon input">
-            <input type="password" id="password" name="password" placeholder="密码">
+            <input type="password" id="password" name="password" placeholder="密码" />
             <i class="lock icon"></i>
             <div class="ui corner label red" data-content="密码必须填写,将作为服务器登录密码,且不能为弱口令">
               <i class="asterisk icon"></i>
@@ -101,11 +101,11 @@
         "captcha": captcha
       }, 
       function(data){
-        if (data.result == "-1") { // 验证码错误
+        if (data.result == false) { // 验证码错误
           $(".captcha img").click()
         };
-        if (data.result == "true") {
-          document.location.href = "/home"
+        if (data.result == true) {
+          document.location.href = data.refer
         };
         console.log(data)
       });
