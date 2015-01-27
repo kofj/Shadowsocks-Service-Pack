@@ -26,7 +26,7 @@
           <div class="ui compact menu">
             <div class="ui simple dropdown item">
               <i class="dropdown icon"></i>
-              FrankKung
+              设置
               <div class="menu">
                 <div class="item">修改资料</div>
                 <div class="item">修改密码</div>
