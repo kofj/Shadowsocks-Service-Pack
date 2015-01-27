@@ -81,7 +81,7 @@
     <!--/ right column -->
   </div>
 
-  <!-- {{template "public/footer.tpl" .}} -->
+  <script src="/static/js/sha1.js" type="text/javascript"></script>
   {{template "public/js.tpl" .}}
   <script type="text/javascript">
   $(document).ready(function(){
@@ -96,18 +96,19 @@
       $(this).submit();
       $.post(url, {
         "username": username, 
-        "password": password, 
+        "password": sha1(password), 
         "captcha_id": captcha_id,
         "captcha": captcha
       }, 
       function(data){
-        if (data.result == false) { // 验证码错误
-          $(".captcha img").click()
+        console.log(data)
+        if (data.result == false) {
+          alert(data.msg);
+          location.reload();
         };
         if (data.result == true) {
           document.location.href = data.refer
-        };
-        console.log(data)
+        }
       });
     });
   });

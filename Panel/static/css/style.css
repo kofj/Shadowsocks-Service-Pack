@@ -52,5 +52,53 @@ div#verifycode img {
   }
 }
 
+/** public **/
+div.ui.page.grid.body {
+  padding-top: 5.5rem;
+}
 
-
+/** home **/
+.fixed.light.following.bar {
+background-color: #FFFFFF;
+border-bottom: 1px solid #DDDDDD;
+box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.04);
+}
+.fixed.following.bar {
+position: fixed;
+top: 0px;
+padding: 1em 0em;
+background-color: #FFFFFF;
+}
+.fixed.following.bar {
+background-image: none;
+}
+.following.bar {
+position: absolute;
+top: 0px;
+z-index: 900;
+left: 0%;
+padding: 2em 0em;
+width: 100%;
+box-shadow: 0px 0px 0px 0px transparent;
+border-bottom: 1px solid transparent;
+transition: padding 0.5s ease, background 0.5s ease, box-shadow 0.5s ease, border 0.5s ease;
+}
+.following.bar .additional.item {
+display: none;
+}
+.following.bar .view-ui.item:hover {
+  color: #D9499A;
+}
+.following .logo {
+float: left;
+width: 35px;
+margin-right: 1em;
+}
+.following .logo .side {
+width: 35px;
+}
+.following.bar .column > .menu {
+margin-top: 0px;
+height: 35px;
+font-weight: bold;
+}
