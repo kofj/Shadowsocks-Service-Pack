@@ -2,7 +2,6 @@
 .AppleDouble
 .LSOverride
 Icon
-Panel
 
 # Thumbnails
 ._*
@@ -10,4 +9,4 @@ Panel
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-temp/
+temp
