@@ -85,8 +85,8 @@ $.fn.form.settings.rules["mail"] = function(value) {
 
 // not contains
 $.fn.form.settings.rules["notcontains"] = function(value, field) {
+    text = $("#"+field).val();
     text = text.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-    console.log("[debug]v: "+ value +", t:"+text);
-    return !(value.search(text) !== -1);
+    return (value.search(text) == -1);
 };
 

@@ -4,6 +4,7 @@ import (
 	. "Shadowsocks-Service-Pack/Panel/models"
 	"fmt"
 	"regexp"
+	"time"
 )
 
 type RegisterController struct {
@@ -17,7 +18,50 @@ type RegisterController struct {
  */
 func (this *RegisterController) Get() {
 	this.haveLogin()
+	this.Data["invite"] = this.GetString("invite")
 	this.TplNames = "register.tpl"
+}
+
+/**
+ * register post.
+ * @author Frank Kung <kfanjian@gmail.com>
+ * @date 2015-01-28 10:55:34
+ */
+func (this *RegisterController) Post() {
+	this.haveLogin()
+
+	captcha := cpt.VerifyReq(this.Ctx.Request)
+
+	if !captcha { // Check captcha.
+		this.Data["json"] = map[string]interface{}{"result": false, "msg": "invalid captcha"}
+		this.ServeJson()
+		return
+	}
+
+	var user User
+
+	user.Invite = this.GetString("invite")
+	user.Username = this.GetString("username")
+	user.Password = this.GetString("password")
+	user.Email = this.GetString("email")
+	user.Createtime = time.Now().Unix()
+	user, err := AddUser(user)
+	if err != nil {
+		if IsDev {
+			fmt.Println(err)
+		}
+		this.Data["json"] = map[string]interface{}{"result": false, "msg": "error"}
+		this.ServeJson()
+	}
+	if err == nil && user.Id > 0 {
+		this.SetSession("userid", user.Id)
+		this.SetSession("email", user.Email)
+		this.SetSession("username", user.Username)
+		this.SetSession("status", user.Status)
+
+		this.Data["json"] = map[string]interface{}{"result": true, "msg": "Resgister sucess.", "refer": this.UrlFor("MailController.ActiveMsg")}
+		this.ServeJson()
+	}
 }
 
 /**
@@ -37,7 +81,7 @@ func (this *RegisterController) CheckUsername() {
 	// Get data.
 	user, err := FindUser(value)
 
-	fmt.Println(user, err)
+	//fmt.Println(user, err)
 
 	if err == nil && user.Id == 0 {
 		this.Data["json"] = map[string]interface{}{"result": true, "msg": "This username can be register"}
@@ -64,7 +108,7 @@ func (this *RegisterController) CheckInvite() {
 	}
 	// Get data.
 	code, err := FindCode(value)
-	fmt.Println(code, err)
+	//fmt.Println(code, err)
 
 	if err == nil && code.Id != 0 && code.Used == 0 {
 		this.Data["json"] = map[string]interface{}{"result": true, "msg": "This code can be register"}
@@ -91,7 +135,7 @@ func (this *RegisterController) CheckEmail() {
 
 	// Get data.
 	user, err := FindUserByMail(value)
-	fmt.Println(user, err)
+	//fmt.Println(user, err)
 
 	if err == nil && user.Id == 0 {
 		this.Data["json"] = map[string]interface{}{"result": true, "msg": "This email can be register"}

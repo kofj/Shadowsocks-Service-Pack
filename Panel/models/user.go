@@ -15,7 +15,6 @@ type User struct {
 	Status        int    `xorm:"default 0"`
 	Lastlogintime int64  `xorm:"int64(10)"`
 	Createtime    int64  `xorm:"int64(10)"`
-	//TestIt        int
 }
 
 // find user by name
@@ -41,11 +40,9 @@ func FindUserByMail(mail string) (User, error) {
 }
 
 // add new user
-func AddUser(user User) User {
-	id, err := Orm.InsertOne(&user)
-	fmt.Printf("[NewUser]Id: %v ", id)
-	fmt.Println(err, user)
-	return user
+func AddUser(user User) (User, error) {
+	_, err := Orm.InsertOne(&user)
+	return user, err
 }
 
 // update login time

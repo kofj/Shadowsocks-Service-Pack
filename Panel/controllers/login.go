@@ -55,6 +55,7 @@ func (this *LoginController) Post() {
 			LastLoginTime(time.Now().Unix())
 
 			this.SetSession("userid", user.Id)
+			this.SetSession("email", user.Email)
 			this.SetSession("username", user.Username)
 			this.SetSession("status", user.Status)
 

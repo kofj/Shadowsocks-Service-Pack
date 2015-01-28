@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/utils/captcha"
@@ -24,7 +24,7 @@ func (this *BaseController) Prepare() {
 	cache.CachePath = "temp/cache"
 	cache.FileSuffix = ".cache"
 	cpt = captcha.NewWithFilter("/captcha/", cache)
-	fmt.Printf("[Debug]Id:%v, Name:%s, Status: %v \r\n", this.GetSession("userid"), this.GetSession("username"), this.GetSession("status"))
+	//fmt.Printf("[Debug]Id:%v, Name:%s, Status: %v \r\n", this.GetSession("userid"), this.GetSession("username"), this.GetSession("status"))
 
 	this.Data["xsrf_token"] = this.XsrfToken()
 	this.Data["logout"] = this.UrlFor("LogoutController.Get")

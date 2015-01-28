@@ -13,5 +13,6 @@ func init() {
 	beego.Router("/message", &controllers.BaseController{}, "*:Message")
 	beego.Router("/register", &controllers.RegisterController{})
 
+	beego.AutoRouter(&controllers.MailController{})
 	beego.AutoRouter(&controllers.RegisterController{})
 }

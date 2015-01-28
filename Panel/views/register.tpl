@@ -81,7 +81,7 @@
           </div>
         </div>
         <div class="center aligned column">
-          <div class=" blue ui labeled icon button"><i class="plus icon"></i>注册新用户</div>
+          <div class=" blue ui labeled icon button submit"><i class="plus icon"></i>注册新用户</div>
         </div>
 
       </div>
@@ -109,12 +109,34 @@
     {{if .invite }}
     $("#invite").focus();
     {{end}}
-  });
 
-  // 提示信息
-    $("*").popup({
-      position: 'right center'
+    // 提交
+    $(".submit").click(function(){
+      var url       = "/register";
+      var usrname  = $("#username").val();
+      var password  = $("#password").val();
+      var captcha   = $("#captcha").val();
+      var captcha_id = $("input[name=captcha_id]").val();
+      $.post(url, {
+        "invite": $("#invite").val(),
+        "username": usrname,
+        "password": sha1(password),
+        "email": $("#email").val(),
+        "captcha_id": captcha_id,
+        "captcha": captcha
+      }, 
+      function(data){
+        console.log(data)
+        if (data.result == false) {
+          alert(data.msg);
+          location.reload();
+        };
+        if (data.result == true) {
+          document.location.href = data.refer
+        }
+      });
     });
+
   // 表单验证
   $('.ui.form').form({
     invite: {
@@ -139,9 +161,9 @@
         type   : 'empty',
         prompt : '请填写用户名'
       },{
-		type	: 'length[4]',
-		prompt  : '用户名至少4个字符'
-		}, {
+    type  : 'length[4]',
+    prompt  : '用户名至少4个字符'
+    }, {
         type   : 'username',
         prompt   : '用户名已被注册,请重新填写'
       }]
@@ -189,8 +211,9 @@
   }, {
     inline : true,
     on     : 'blur'
-  }, {
-    debug  : true
+  });
+
+
   });
   </script>
 </body>
