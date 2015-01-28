@@ -2,6 +2,9 @@ package controllers
 
 import (
 	. "Shadowsocks-Service-Pack/Panel/models"
+	"fmt"
+	"reflect"
+	"time"
 )
 
 type LoginController struct {
@@ -39,10 +42,17 @@ func (this *LoginController) Post() {
 	// Get data.
 	user, err := FindUser(username)
 
+	if IsDev {
+		fmt.Println(user, password, password == user.Password, user.Password == password, len(password), len(user.Password), reflect.TypeOf(user.Password), reflect.TypeOf(password))
+	}
+
 	if err != nil {
 		this.Data["json"] = map[string]interface{}{"result": false, "msg": "user does not exist", "refer": "/"}
 	} else {
 		if password == user.Password {
+
+			// write login time
+			LastLoginTime(time.Now().Unix())
 
 			this.SetSession("userid", user.Id)
 			this.SetSession("username", user.Username)
