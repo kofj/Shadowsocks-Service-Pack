@@ -12,8 +12,13 @@ type BaseController struct {
 }
 
 var cpt *captcha.Captcha
+var IsDev bool
 
 func (this *BaseController) Prepare() {
+	if beego.RunMode == "dev" {
+		IsDev = true
+	}
+
 	// use beego cache system store the captcha data
 	cache := cache.NewFileCache() //cache.NewMemoryCache()
 	cache.CachePath = "temp/cache"
