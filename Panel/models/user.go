@@ -7,16 +7,15 @@ import (
 
 // User Model Struct
 type User struct {
-	Id            int
-	Username      string `orm:size"size(10)" form:"Username"`
-	Password      string `orm:"size(255)" form:"Password"`
-	Invite        string `orm:"size(9)" form:"Invite"`
-	Email         string `orm:size"size(25)" form:"Email"`
-	Usertype      int    `orm:"size(2)"`
-	Group         int    `orm:"size(2)"`
-	Status        int    `orm:default(1);"size(1)"`
-	Lastlogintime int64  `orm:"size(10)"`
-	Createtime    int64  `orm:"size(10)"`
+	Id            int64
+	Username      string `xorm:"varchar(10) notnull unique 'username' "`
+	Password      string `xorm:"varchar(40)"`
+	Invite        string `xorm:"varchar(9) unique 'invite' "`
+	Email         string `xorm:"varchar(25) unique 'email' "`
+	Status        int    `xorm:"default 0"`
+	Lastlogintime int64  `xorm:"int64(10)"`
+	Createtime    int64  `xorm:"int64(10)"`
+	//TestIt        int
 }
 
 // find user by name
@@ -39,4 +38,21 @@ func FindUserByMail(mail string) (User, error) {
 	}
 
 	return user, err
+}
+
+// add new user
+func AddUser(user User) User {
+	id, err := Orm.InsertOne(&user)
+	fmt.Printf("[NewUser]Id: %v ", id)
+	fmt.Println(err, user)
+	return user
+}
+
+// update login time
+func LastLoginTime(value int64) {
+	log := User{Lastlogintime: value}
+	_, err := Orm.Update(&log)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
