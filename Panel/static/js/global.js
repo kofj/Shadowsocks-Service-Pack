@@ -42,18 +42,14 @@ $.fn.form.settings.rules["invite"] = function(value) {
     var result;
     $.ajax({
         async : false,
-        url : "/api/check/invite/"+ $("#invite").val(),
+        url : "/register/checkinvite/"+ $("#invite").val(),
         type : "GET",
         dataType: "json",
         success: function(data){
             result = data.result;
         }
     });
-    if (result == "true") {
-        return true;
-    } else {
-        return false;
-    };
+    return result
 };
 
 
@@ -62,18 +58,14 @@ $.fn.form.settings.rules["username"] = function(value) {
     var result;
     $.ajax({
         async : false,
-        url : "/api/check/username/"+ $("#username").val(),
+        url : "/register/checkusername/"+ $("#username").val(),
         type : "GET",
         dataType: "json",
         success: function(data){
             result = data.result;
         }
     });
-    if (result == "true") {
-        return true;
-    } else {
-        return false;
-    };
+    return result
 };
 
 // ajax check email
@@ -81,24 +73,20 @@ $.fn.form.settings.rules["mail"] = function(value) {
     var result;
     $.ajax({
         async : false,
-        url : "/api/check/email/"+ $("#email").val(),
+        url : "/register/checkemail/"+ $("#email").val(),
         type : "GET",
         dataType: "json",
         success: function(data){
             result = data.result;
         }
     });
-    if (result == "true") {
-        return true;
-    } else {
-        return false;
-    };
+    return result
 };
 
 // not contains
 $.fn.form.settings.rules["notcontains"] = function(value, field) {
     text = text.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-    console.log("[debig]v: "+ value +", t:"+text);
+    console.log("[debug]v: "+ value +", t:"+text);
     return !(value.search(text) !== -1);
 };
 

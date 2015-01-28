@@ -29,3 +29,14 @@ func FindUser(username string) (User, error) {
 
 	return user, err
 }
+
+// find user by mail
+func FindUserByMail(mail string) (User, error) {
+	user := User{Email: mail}
+	_, err := Orm.Get(&user)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return user, err
+}
