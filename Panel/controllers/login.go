@@ -55,8 +55,9 @@ func (this *LoginController) Post() {
 			LastLoginTime(time.Now().Unix())
 
 			this.SetSession("userid", user.Id)
-			this.SetSession("email", user.Email)
 			this.SetSession("username", user.Username)
+			this.SetSession("test", user.Invite)
+			this.SetSession("email", user.Email)
 			this.SetSession("status", user.Status)
 
 			this.Data["json"] = map[string]interface{}{"result": true, "msg": "user[" + user.Username + "] login success ", "refer": this.UrlFor("HomeController.Get")}

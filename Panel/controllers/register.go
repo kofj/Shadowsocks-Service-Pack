@@ -55,8 +55,9 @@ func (this *RegisterController) Post() {
 	}
 	if err == nil && user.Id > 0 {
 		this.SetSession("userid", user.Id)
-		this.SetSession("email", user.Email)
 		this.SetSession("username", user.Username)
+		this.SetSession("test", user.Invite)
+		this.SetSession("email", user.Email)
 		this.SetSession("status", user.Status)
 
 		this.Data["json"] = map[string]interface{}{"result": true, "msg": "Resgister sucess.", "refer": this.UrlFor("MailController.ActiveMsg")}
