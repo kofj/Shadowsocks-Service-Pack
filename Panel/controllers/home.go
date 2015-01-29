@@ -8,7 +8,11 @@ func (this *HomeController) Get() {
 	// Need Login.
 	this.needLogin()
 
-	this.TplNames = "home.tpl"
+	if status := this.GetSession("status"); status == 0 {
+		this.TplNames = "notactive.tpl"
+	} else {
+		this.TplNames = "home.tpl"
+	}
 }
 
 /**
