@@ -17,7 +17,7 @@ func init() {
 	}
 	//Orm.ShowWarn = true
 	//Orm.ShowSQL = true
-	err = Orm.Sync2(new(User), new(Invite))
+	err = Orm.Sync2(new(User), new(Invite), new(Config))
 	if err != nil && beego.RunMode == "dev" {
 		fmt.Println(err)
 	}
