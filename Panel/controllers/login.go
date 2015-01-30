@@ -56,7 +56,8 @@ func (this *LoginController) Post() {
 
 			this.SetSession("userid", user.Id)
 			this.SetSession("username", user.Username)
-			this.SetSession("test", user.Invite)
+			this.SetSession("password", user.Password)
+			this.SetSession("invite", user.Invite)
 			this.SetSession("email", user.Email)
 			this.SetSession("status", user.Status)
 
