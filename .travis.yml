@@ -4,6 +4,7 @@ go:
 install:
   - go get github.com/astaxie/beego
   - go get github.com/go-xorm/xorm
+  - go get github.com/Unknwon/com
   - go get github.com/go-sql-driver/mysql
   - go get github.com/smartystreets/goconvey/convey
   - mv $HOME/gopath/src/github.com/kofj/Shadowsocks-Service-Pack $HOME/gopath/src
