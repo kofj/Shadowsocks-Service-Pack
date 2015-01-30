@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	//"fmt"
+	"Shadowsocks-Service-Pack/Panel/library/mail"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/utils/captcha"
@@ -13,18 +13,22 @@ type BaseController struct {
 
 var cpt *captcha.Captcha
 var IsDev bool
+var siteName string
+var siteRoot string
 
 func (this *BaseController) Prepare() {
 	if beego.RunMode == "dev" {
 		IsDev = true
 	}
 
+	siteName = beego.AppConfig.String("site::name")
+	siteRoot = beego.AppConfig.String("site::root")
+
 	// use beego cache system store the captcha data
-	cache := cache.NewFileCache() //cache.NewMemoryCache()
+	cache := cache.NewFileCache()
 	cache.CachePath = "temp/cache"
 	cache.FileSuffix = ".cache"
 	cpt = captcha.NewWithFilter("/captcha/", cache)
-	//fmt.Printf("[Debug]Id:%v, Name:%s, Status: %v \r\n", this.GetSession("userid"), this.GetSession("username"), this.GetSession("status"))
 
 	this.Data["xsrf_token"] = this.XsrfToken()
 	this.Data["logout"] = this.UrlFor("LogoutController.Get")
@@ -74,4 +78,18 @@ func (this *BaseController) haveLogin() {
 		this.Redirect(this.UrlFor("HomeController.Get"), 302)
 	}
 
+}
+
+/**
+ * Send mail to
+ * author: Frank Kung <kanjian@gmail.com>
+ * date: 2015-01-30 18:21:45
+ */
+func (this *BaseController) sendmail(subject, html, toEmail string) bool {
+	host := beego.AppConfig.String("tlsmail::host")
+	port, _ := beego.AppConfig.Int("tlsmail::port")
+	email := beego.AppConfig.String("tlsmail::email")
+	password := beego.AppConfig.String("tlsmail::password")
+	fromName := beego.AppConfig.String("tlsmail::fromName")
+	return mail.Send(host, email, password, toEmail, fromName, subject, html, port)
 }
