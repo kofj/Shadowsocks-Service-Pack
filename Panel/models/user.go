@@ -46,10 +46,16 @@ func AddUser(user User) (User, error) {
 }
 
 // update login time
-func LastLoginTime(value int64) {
+func LastLoginTime(id, value int64) {
 	log := User{Lastlogintime: value}
-	_, err := Orm.Update(&log)
+	_, err := Orm.Id(id).Update(&log)
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+// Update user status
+func UpdateUserStatus(id int64, status int) {
+	user := User{Status: status}
+	Orm.Id(id).Update(&user)
 }

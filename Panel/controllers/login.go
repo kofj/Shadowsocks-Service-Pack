@@ -52,7 +52,7 @@ func (this *LoginController) Post() {
 		if password == user.Password {
 
 			// write login time
-			LastLoginTime(time.Now().Unix())
+			LastLoginTime(user.Id, time.Now().Unix())
 
 			this.SetSession("userid", user.Id)
 			this.SetSession("username", user.Username)
