@@ -21,6 +21,7 @@ type ActiveMail struct {
 	Activecode string
 }
 
+// Send Active Link to user mailbox.
 func (this *MailController) ActiveMsg() {
 	var doc bytes.Buffer
 	// get email template from db
@@ -47,6 +48,20 @@ func (this *MailController) ActiveMsg() {
 	this.Message("请激活", "已发送激活邮件到您的邮箱"+toEmail+",请在3小时内激活帐号.", this.UrlFor("HomeController.Get"), 10)
 }
 
-func (this *MailController) Name() {
-	models.SetConfig("ActiveMailTemplate", "1激活")
+// Active user with the code
+func (this *MailController) Active() {
+	status := this.GetSession("status")
+	userid := this.GetSession("userid").(int64)
+	code := this.GetString("code")
+	data := fmt.Sprintf("%v%v%v%v%v", this.GetSession("userid"), this.GetSession("username"), this.GetSession("email"), this.GetSession("password"), this.GetSession("invite")) //+  +  +  +
+
+	if utils.VerifyTimeLimitCode(data, 180, code) && status == 0 {
+		this.SetSession("status", 1)
+		models.UpdateUserStatus(userid, 1)
+		this.Message("激活成功", "您的帐号已激活,请尽情享用", this.UrlFor("HomeController.Get"), 3)
+	} else if utils.VerifyTimeLimitCode(data, 180, code) && status == 1 {
+		this.Message("无需激活", "您的帐号已激活,无需重复操作.", this.UrlFor("HomeController.Get"), 3)
+	} else {
+		this.Message("失败", "无效的激活连接.请点击重新发送.", this.UrlFor("HomeController.Get"), 3)
+	}
 }
