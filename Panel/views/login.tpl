@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-  <!-- {{template "public/header.tpl" .}} -->
+
   <div id="register" class="ui two column middle aligned relaxed grid basic segment">
     <!-- left column -->
     <div class="column">
